@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>48121196756-13fmcacivd2hebp7ij0dq086mortkfq0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.48121196756-13fmcacivd2hebp7ij0dq086mortkfq0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>48121196756-3hcoms1vf6jrc8nnc7941ojke6d30q1m.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBODhDewWDxJlsHar-ujV55xb6QXuEaIhw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>48121196756</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.cornell.fitbuddy</string>
+	<key>PROJECT_ID</key>
+	<string>fitbuddy-ct</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fitbuddy-ct.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:48121196756:ios:a75c324d77e1e88d57cb41</string>
+</dict>
+</plist>
