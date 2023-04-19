@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "48121196756",
+    "project_id": "fitbuddy-ct",
+    "storage_bucket": "fitbuddy-ct.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48121196756:android:c786fe7c37e306b457cb41",
+        "android_client_info": {
+          "package_name": "com.cornell.fitbuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48121196756-3hcoms1vf6jrc8nnc7941ojke6d30q1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cornell.fitbuddy",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "48121196756-ol9hpoqufplb2masads8fnthi474uer6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_EL7fDbWIu5LExmaqxB0cLyoEyiYLx8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48121196756-ol9hpoqufplb2masads8fnthi474uer6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "48121196756-13fmcacivd2hebp7ij0dq086mortkfq0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cornell.fitbuddy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
