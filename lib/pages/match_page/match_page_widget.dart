@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_swipeable_stack.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/widgets/profle_completion_status_card/profle_completion_status_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
     super.initState();
     _model = createModel(context, () => MatchPageModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'MatchPage'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -51,7 +53,7 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
               backgroundColor: FlutterFlowTheme.of(context).tertiary,
               automaticallyImplyLeading: false,
               title: Text(
-                'Page Title',
+                'Match',
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
                       fontFamily: 'Poppins',
                       color: Colors.white,
@@ -66,6 +68,24 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    child: InkWell(
+                      onTap: () async {
+                        logFirebaseEvent('MATCH_Container_qlshx0b5_ON_TAP');
+                        logFirebaseEvent(
+                            'profleCompletionStatusCard_navigate_to');
+
+                        context.pushNamed('EditProfilePage');
+                      },
+                      child: wrapWithModel(
+                        model: _model.profleCompletionStatusCardModel,
+                        updateCallback: () => setState(() {}),
+                        child: ProfleCompletionStatusCardWidget(),
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: Padding(
                       padding:
