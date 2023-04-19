@@ -69,23 +69,32 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? HomePageWidget() : AuthPageWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : AuthPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? HomePageWidget() : AuthPageWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : AuthPageWidget(),
         ),
         FFRoute(
-          name: 'HomePage',
-          path: '/homePage',
-          builder: (context, params) => HomePageWidget(),
+          name: 'MatchPage',
+          path: '/matchPage',
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'MatchPage')
+              : MatchPageWidget(),
         ),
         FFRoute(
           name: 'AuthPage',
           path: '/authPage',
           builder: (context, params) => AuthPageWidget(),
+        ),
+        FFRoute(
+          name: 'ProfilePage',
+          path: '/profilePage',
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'ProfilePage')
+              : ProfilePageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,

@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
-class HomePageModel extends FlutterFlowModel {
+class MatchPageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for SwipeableStack widget.
