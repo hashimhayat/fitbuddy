@@ -4,9 +4,9 @@ import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 
 class ConnectionsPageModel extends FlutterFlowModel {
@@ -15,10 +15,6 @@ class ConnectionsPageModel extends FlutterFlowModel {
   // State field(s) for searchBar widget.
   TextEditingController? searchBarController;
   String? Function(BuildContext, String?)? searchBarControllerValidator;
-  // State field(s) for ListView widget.
-  PagingController<DocumentSnapshot?, MatchesRecord>? pagingController;
-  Query? pagingQuery;
-  List<StreamSubscription?> streamSubscriptions = [];
 
   /// Initialization and disposal methods.
 
@@ -26,7 +22,6 @@ class ConnectionsPageModel extends FlutterFlowModel {
 
   void dispose() {
     searchBarController?.dispose();
-    streamSubscriptions.forEach((s) => s?.cancel());
   }
 
   /// Additional helper methods are added here.

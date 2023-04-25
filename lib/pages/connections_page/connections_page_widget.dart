@@ -4,9 +4,9 @@ import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'connections_page_model.dart';
 export 'connections_page_model.dart';
@@ -236,234 +236,26 @@ class _ConnectionsPageWidgetState extends State<ConnectionsPageWidget> {
                                               ),
                                         ),
                                       ),
-                                      PagedListView<DocumentSnapshot<Object?>?,
-                                          MatchesRecord>(
-                                        pagingController: () {
-                                          final Query<Object?> Function(
-                                                  Query<Object?>) queryBuilder =
-                                              (matchesRecord) => matchesRecord
-                                                  .where('matched',
-                                                      isEqualTo: true)
-                                                  .where('primary_user_ref',
-                                                      isEqualTo:
-                                                          currentUserReference);
-                                          if (_model.pagingController != null) {
-                                            final query = queryBuilder(
-                                                MatchesRecord.collection);
-                                            if (query != _model.pagingQuery) {
-                                              // The query has changed
-                                              _model.pagingQuery = query;
-                                              _model.streamSubscriptions
-                                                  .forEach((s) => s?.cancel());
-                                              _model.streamSubscriptions
-                                                  .clear();
-                                              _model.pagingController!
-                                                  .refresh();
-                                            }
-                                            return _model.pagingController!;
-                                          }
-
-                                          _model.pagingController =
-                                              PagingController(
-                                                  firstPageKey: null);
-                                          _model.pagingQuery = queryBuilder(
-                                              MatchesRecord.collection);
-                                          _model.pagingController!
-                                              .addPageRequestListener(
-                                                  (nextPageMarker) {
-                                            queryMatchesRecordPage(
-                                              queryBuilder: (matchesRecord) =>
-                                                  matchesRecord
-                                                      .where('matched',
-                                                          isEqualTo: true)
-                                                      .where('primary_user_ref',
-                                                          isEqualTo:
-                                                              currentUserReference),
-                                              nextPageMarker: nextPageMarker,
-                                              pageSize: 25,
-                                              isStream: true,
-                                            ).then((page) {
-                                              _model.pagingController!
-                                                  .appendPage(
-                                                page.data,
-                                                page.nextPageMarker,
-                                              );
-                                              final streamSubscription = page
-                                                  .dataStream
-                                                  ?.listen((data) {
-                                                data.forEach((item) {
-                                                  final itemIndexes = _model
-                                                      .pagingController!
-                                                      .itemList!
-                                                      .asMap()
-                                                      .map((k, v) => MapEntry(
-                                                          v.reference.id, k));
-                                                  final index = itemIndexes[
-                                                      item.reference.id];
-                                                  final items = _model
-                                                      .pagingController!
-                                                      .itemList!;
-                                                  if (index != null) {
-                                                    items.replaceRange(index,
-                                                        index + 1, [item]);
-                                                    _model.pagingController!
-                                                        .itemList = {
-                                                      for (var item in items)
-                                                        item.reference: item
-                                                    }.values.toList();
-                                                  }
-                                                });
-                                                setState(() {});
-                                              });
-                                              _model.streamSubscriptions
-                                                  .add(streamSubscription);
-                                            });
-                                          });
-                                          return _model.pagingController!;
-                                        }(),
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        reverse: false,
-                                        scrollDirection: Axis.vertical,
-                                        builderDelegate:
-                                            PagedChildBuilderDelegate<
-                                                MatchesRecord>(
-                                          // Customize what your widget looks like when it's loading the first page.
-                                          firstPageProgressIndicatorBuilder:
-                                              (_) => Center(
-                                            child: SizedBox(
-                                              width: 50.0,
-                                              height: 50.0,
-                                              child: CircularProgressIndicator(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                              ),
-                                            ),
-                                          ),
-
-                                          itemBuilder:
-                                              (context, _, listViewIndex) {
-                                            final listViewMatchesRecord = _model
-                                                .pagingController!
-                                                .itemList![listViewIndex];
-                                            return Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 8.0, 16.0, 0.0),
-                                              child: Container(
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xFFF1F4F8),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          12.0),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          8.0, 8.0, 12.0, 8.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                        child: Image.network(
-                                                          listViewMatchesRecord
-                                                              .secondaryUserImage!,
-                                                          width: 70.0,
-                                                          height: 70.0,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    16.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        child: Text(
-                                                          listViewMatchesRecord
-                                                              .secondaryUserName!,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Outfit',
-                                                                color: Color(
-                                                                    0xFF1D2429),
-                                                                fontSize: 18.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 16.0, 0.0, 16.0),
-                                        child: Text(
-                                          'Categories',
-                                          style: FlutterFlowTheme.of(context)
-                                              .headlineSmall
-                                              .override(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF1D2429),
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                        ),
-                                      ),
                                       StreamBuilder<List<MatchesRecord>>(
                                         stream: queryMatchesRecord(
                                           queryBuilder: (matchesRecord) =>
                                               matchesRecord
-                                                  .where('connected',
-                                                      isEqualTo: false)
+                                                  .where('matched',
+                                                      isEqualTo: true)
                                                   .where('primary_user_ref',
                                                       isEqualTo:
-                                                          currentUserReference),
-                                          limit: 50,
+                                                          currentUserReference)
+                                                  .where('connected',
+                                                      isEqualTo: true),
                                         ),
                                         builder: (context, snapshot) {
                                           // Customize what your widget looks like when it's loading.
                                           if (!snapshot.hasData) {
                                             return Center(
-                                              child: SizedBox(
-                                                width: 50.0,
-                                                height: 50.0,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                ),
+                                              child: LinearProgressIndicator(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
                                               ),
                                             );
                                           }
@@ -501,6 +293,9 @@ class _ConnectionsPageWidgetState extends State<ConnectionsPageWidget> {
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .center,
@@ -543,6 +338,196 @@ class _ConnectionsPageWidgetState extends State<ConnectionsPageWidget> {
                                                                       FontWeight
                                                                           .w500,
                                                                 ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 16.0, 0.0, 16.0),
+                                        child: Text(
+                                          'Pending Requests',
+                                          style: FlutterFlowTheme.of(context)
+                                              .headlineSmall
+                                              .override(
+                                                fontFamily: 'Outfit',
+                                                color: Color(0xFF1D2429),
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ),
+                                      StreamBuilder<List<MatchesRecord>>(
+                                        stream: queryMatchesRecord(
+                                          queryBuilder: (matchesRecord) =>
+                                              matchesRecord
+                                                  .where(
+                                                      'connected',
+                                                      isEqualTo: false)
+                                                  .where(
+                                                      'primary_user_ref',
+                                                      isEqualTo:
+                                                          currentUserReference)
+                                                  .where('matched',
+                                                      isEqualTo: true),
+                                          limit: 50,
+                                        ),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: LinearProgressIndicator(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                              ),
+                                            );
+                                          }
+                                          List<MatchesRecord>
+                                              listViewMatchesRecordList =
+                                              snapshot.data!;
+                                          return ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: listViewMatchesRecordList
+                                                .length,
+                                            itemBuilder:
+                                                (context, listViewIndex) {
+                                              final listViewMatchesRecord =
+                                                  listViewMatchesRecordList[
+                                                      listViewIndex];
+                                              return Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 8.0, 16.0, 0.0),
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xFFF1F4F8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(8.0, 8.0,
+                                                                12.0, 8.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                              child:
+                                                                  Image.network(
+                                                                listViewMatchesRecord
+                                                                    .secondaryUserImage!,
+                                                                width: 70.0,
+                                                                height: 70.0,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                listViewMatchesRecord
+                                                                    .secondaryUserName!,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Outfit',
+                                                                      color: Color(
+                                                                          0xFF1D2429),
+                                                                      fontSize:
+                                                                          18.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child:
+                                                              FlutterFlowIconButton(
+                                                            borderColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiary,
+                                                            borderRadius: 30.0,
+                                                            borderWidth: 2.0,
+                                                            buttonSize: 40.0,
+                                                            icon: Icon(
+                                                              Icons.check,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .tertiary,
+                                                              size: 20.0,
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              logFirebaseEvent(
+                                                                  'CONNECTIONS_PAGE_PAGE_check_ICN_ON_TAP');
+                                                              logFirebaseEvent(
+                                                                  'IconButton_backend_call');
+
+                                                              final matchesUpdateData =
+                                                                  createMatchesRecordData(
+                                                                connected: true,
+                                                              );
+                                                              await listViewMatchesRecord
+                                                                  .reference
+                                                                  .update(
+                                                                      matchesUpdateData);
+                                                            },
                                                           ),
                                                         ),
                                                       ],

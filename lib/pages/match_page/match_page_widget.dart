@@ -168,7 +168,10 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                           }
                                           List<UsersRecord>
                                               swipeableStackUsersRecordList =
-                                              snapshot.data!;
+                                              snapshot.data!
+                                                  .where((u) =>
+                                                      u.uid != currentUserUid)
+                                                  .toList();
                                           return FlutterFlowSwipeableStack(
                                             topCardHeightFraction: 0.72,
                                             middleCardHeightFraction: 0.68,
