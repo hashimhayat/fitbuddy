@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/firebase_storage/storage.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
@@ -54,28 +53,16 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
             appBar: AppBar(
               backgroundColor: FlutterFlowTheme.of(context).tertiary,
               automaticallyImplyLeading: false,
-              leading: FlutterFlowIconButton(
-                borderColor: Colors.transparent,
-                borderRadius: 30.0,
-                borderWidth: 1.0,
-                buttonSize: 60.0,
-                icon: Icon(
-                  Icons.arrow_back_rounded,
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  size: 30.0,
-                ),
-                onPressed: () async {
-                  logFirebaseEvent('PROFILE_arrow_back_rounded_ICN_ON_TAP');
-                  logFirebaseEvent('IconButton_navigate_back');
-                  context.safePop();
-                },
-              ),
               title: Text(
                 'Profile',
-                style: FlutterFlowTheme.of(context).titleSmall,
+                style: FlutterFlowTheme.of(context).headlineMedium.override(
+                      fontFamily: 'Poppins',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 22.0,
+                    ),
               ),
               actions: [],
-              centerTitle: true,
+              centerTitle: false,
               elevation: 0.0,
             ),
             body: SafeArea(
@@ -114,6 +101,10 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     2.0, 2.0, 2.0, 2.0),
                                 child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
                                   onTap: () async {
                                     logFirebaseEvent(
                                         'PROFILE_PAGE_PAGE_Image_yedof5bb_ON_TAP');
@@ -151,6 +142,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                                   bytes: m.bytes,
                                                   height: m.dimensions?.height,
                                                   width: m.dimensions?.width,
+                                                  blurHash: m.blurHash,
                                                 ))
                                             .toList();
 
@@ -247,6 +239,10 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                     child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onTap: () async {
                         logFirebaseEvent(
                             'PROFILE_PAGE_PAGE_contentView_1_ON_TAP');
@@ -531,6 +527,10 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                     child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
                       onTap: () async {
                         logFirebaseEvent(
                             'PROFILE_PAGE_PAGE_contentView_1_ON_TAP');

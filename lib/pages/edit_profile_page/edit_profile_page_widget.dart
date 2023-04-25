@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -35,9 +36,9 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
         parameters: {'screen_name': 'EditProfilePage'});
     _model.nameFieldController ??=
         TextEditingController(text: currentUserDisplayName);
-    _model.addressFieldController1 ??= TextEditingController(
+    _model.cityFieldController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.city, ''));
-    _model.addressFieldController2 ??= TextEditingController(
+    _model.stateFieldController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.state, ''));
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -125,6 +126,24 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                 child: AuthUserStreamWidget(
                                   builder: (context) => TextFormField(
                                     controller: _model.nameFieldController,
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      '_model.nameFieldController',
+                                      Duration(milliseconds: 2000),
+                                      () async {
+                                        logFirebaseEvent(
+                                            'EDIT_PROFILE_nameField_ON_TEXTFIELD_CHAN');
+                                        logFirebaseEvent(
+                                            'nameField_backend_call');
+
+                                        final usersUpdateData =
+                                            createUsersRecordData(
+                                          displayName:
+                                              _model.nameFieldController.text,
+                                        );
+                                        await currentUserReference!
+                                            .update(usersUpdateData);
+                                      },
+                                    ),
                                     onFieldSubmitted: (_) async {
                                       logFirebaseEvent(
                                           'EDIT_PROFILE_nameField_ON_TEXTFIELD_SUBM');
@@ -133,7 +152,8 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
 
                                       final usersUpdateData =
                                           createUsersRecordData(
-                                        displayName: currentUserDisplayName,
+                                        displayName:
+                                            _model.nameFieldController.text,
                                       );
                                       await currentUserReference!
                                           .update(usersUpdateData);
@@ -154,7 +174,8 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Color(0x00000000),
+                                          color: FlutterFlowTheme.of(context)
+                                              .tertiary,
                                           width: 1.0,
                                         ),
                                         borderRadius:
@@ -208,8 +229,38 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                       0.0, 4.0, 0.0, 0.0),
                                   child: AuthUserStreamWidget(
                                     builder: (context) => TextFormField(
-                                      controller:
-                                          _model.addressFieldController1,
+                                      controller: _model.cityFieldController,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.cityFieldController',
+                                        Duration(milliseconds: 2000),
+                                        () async {
+                                          logFirebaseEvent(
+                                              'EDIT_PROFILE_cityField_ON_TEXTFIELD_CHAN');
+                                          logFirebaseEvent(
+                                              'cityField_backend_call');
+
+                                          final usersUpdateData =
+                                              createUsersRecordData(
+                                            city:
+                                                _model.cityFieldController.text,
+                                          );
+                                          await currentUserReference!
+                                              .update(usersUpdateData);
+                                        },
+                                      ),
+                                      onFieldSubmitted: (_) async {
+                                        logFirebaseEvent(
+                                            'EDIT_PROFILE_cityField_ON_TEXTFIELD_SUBM');
+                                        logFirebaseEvent(
+                                            'cityField_backend_call');
+
+                                        final usersUpdateData =
+                                            createUsersRecordData(
+                                          city: _model.cityFieldController.text,
+                                        );
+                                        await currentUserReference!
+                                            .update(usersUpdateData);
+                                      },
                                       autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -226,7 +277,8 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Color(0x00000000),
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiary,
                                             width: 1.0,
                                           ),
                                           borderRadius:
@@ -252,7 +304,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium,
                                       validator: _model
-                                          .addressFieldController1Validator
+                                          .cityFieldControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
@@ -281,8 +333,39 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                       0.0, 4.0, 0.0, 0.0),
                                   child: AuthUserStreamWidget(
                                     builder: (context) => TextFormField(
-                                      controller:
-                                          _model.addressFieldController2,
+                                      controller: _model.stateFieldController,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.stateFieldController',
+                                        Duration(milliseconds: 2000),
+                                        () async {
+                                          logFirebaseEvent(
+                                              'EDIT_PROFILE_stateField_ON_TEXTFIELD_CHA');
+                                          logFirebaseEvent(
+                                              'stateField_backend_call');
+
+                                          final usersUpdateData =
+                                              createUsersRecordData(
+                                            state: _model
+                                                .stateFieldController.text,
+                                          );
+                                          await currentUserReference!
+                                              .update(usersUpdateData);
+                                        },
+                                      ),
+                                      onFieldSubmitted: (_) async {
+                                        logFirebaseEvent(
+                                            'EDIT_PROFILE_stateField_ON_TEXTFIELD_SUB');
+                                        logFirebaseEvent(
+                                            'stateField_backend_call');
+
+                                        final usersUpdateData =
+                                            createUsersRecordData(
+                                          state:
+                                              _model.stateFieldController.text,
+                                        );
+                                        await currentUserReference!
+                                            .update(usersUpdateData);
+                                      },
                                       autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -299,7 +382,8 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Color(0x00000000),
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiary,
                                             width: 1.0,
                                           ),
                                           borderRadius:
@@ -325,7 +409,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium,
                                       validator: _model
-                                          .addressFieldController2Validator
+                                          .stateFieldControllerValidator
                                           .asValidator(context),
                                     ),
                                   ),
@@ -361,10 +445,23 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                         'Football',
                                         'Basketball'
                                       ],
-                                      onChanged: (val) => setState(() =>
-                                          _model.checkboxGroupValues1 = val),
+                                      onChanged: (val) async {
+                                        setState(() => _model
+                                            .sportsCheckboxGroupValues = val);
+                                        logFirebaseEvent(
+                                            'EDIT_PROFILE_SportsCheckboxGroup_ON_FORM');
+                                        logFirebaseEvent(
+                                            'SportsCheckboxGroup_backend_call');
+
+                                        final usersUpdateData = {
+                                          'sports':
+                                              _model.sportsCheckboxGroupValues,
+                                        };
+                                        await currentUserReference!
+                                            .update(usersUpdateData);
+                                      },
                                       controller: _model
-                                              .checkboxGroupValueController1 ??=
+                                              .sportsCheckboxGroupValueController ??=
                                           FormFieldController<List<String>>(
                                         (currentUserDocument?.sports
                                                 ?.toList() ??
@@ -383,7 +480,8 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                       checkboxBorderRadius:
                                           BorderRadius.circular(8.0),
                                       initialized:
-                                          _model.checkboxGroupValues1 != null,
+                                          _model.sportsCheckboxGroupValues !=
+                                              null,
                                     ),
                                   ),
                                 ),
@@ -418,10 +516,10 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                         'Monthly',
                                         'I do not play regularly'
                                       ],
-                                      onChanged: (val) => setState(() =>
-                                          _model.checkboxGroupValues2 = val),
+                                      onChanged: (val) => setState(() => _model
+                                          .scheduleCheckboxGroupValues = val),
                                       controller: _model
-                                              .checkboxGroupValueController2 ??=
+                                              .scheduleCheckboxGroupValueController ??=
                                           FormFieldController<List<String>>(
                                         (currentUserDocument?.playingSchedule
                                                 ?.toList() ??
@@ -440,7 +538,8 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                       checkboxBorderRadius:
                                           BorderRadius.circular(8.0),
                                       initialized:
-                                          _model.checkboxGroupValues2 != null,
+                                          _model.scheduleCheckboxGroupValues !=
+                                              null,
                                     ),
                                   ),
                                 ),
@@ -451,10 +550,13 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 30.0, 0.0, 40.0),
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'EDIT_PROFILE_PAGE_PAGE_SUBMIT_BTN_ON_TAP');
+                                logFirebaseEvent('Button_navigate_back');
+                                context.safePop();
                               },
-                              text: 'Button',
+                              text: 'Submit',
                               options: FFButtonOptions(
                                 width: double.infinity,
                                 height: 50.0,

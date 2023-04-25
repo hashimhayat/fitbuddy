@@ -76,8 +76,8 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context).tertiary,
                               borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(16.0),
-                                bottomRight: Radius.circular(16.0),
+                                bottomLeft: Radius.circular(22.0),
+                                bottomRight: Radius.circular(22.0),
                                 topLeft: Radius.circular(0.0),
                                 topRight: Radius.circular(0.0),
                               ),
@@ -85,7 +85,7 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                             alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 30.0, 0.0, 0.0),
+                                  24.0, 16.0, 0.0, 0.0),
                               child: Text(
                                 'FitBuddy',
                                 style: FlutterFlowTheme.of(context)

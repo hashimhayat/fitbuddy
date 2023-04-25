@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -18,18 +19,18 @@ class EditProfilePageModel extends FlutterFlowModel {
   // State field(s) for nameField widget.
   TextEditingController? nameFieldController;
   String? Function(BuildContext, String?)? nameFieldControllerValidator;
-  // State field(s) for addressField widget.
-  TextEditingController? addressFieldController1;
-  String? Function(BuildContext, String?)? addressFieldController1Validator;
-  // State field(s) for addressField widget.
-  TextEditingController? addressFieldController2;
-  String? Function(BuildContext, String?)? addressFieldController2Validator;
-  // State field(s) for CheckboxGroup widget.
-  List<String>? checkboxGroupValues1;
-  FormFieldController<List<String>>? checkboxGroupValueController1;
-  // State field(s) for CheckboxGroup widget.
-  List<String>? checkboxGroupValues2;
-  FormFieldController<List<String>>? checkboxGroupValueController2;
+  // State field(s) for cityField widget.
+  TextEditingController? cityFieldController;
+  String? Function(BuildContext, String?)? cityFieldControllerValidator;
+  // State field(s) for stateField widget.
+  TextEditingController? stateFieldController;
+  String? Function(BuildContext, String?)? stateFieldControllerValidator;
+  // State field(s) for SportsCheckboxGroup widget.
+  List<String>? sportsCheckboxGroupValues;
+  FormFieldController<List<String>>? sportsCheckboxGroupValueController;
+  // State field(s) for ScheduleCheckboxGroup widget.
+  List<String>? scheduleCheckboxGroupValues;
+  FormFieldController<List<String>>? scheduleCheckboxGroupValueController;
 
   /// Initialization and disposal methods.
 
@@ -37,8 +38,8 @@ class EditProfilePageModel extends FlutterFlowModel {
 
   void dispose() {
     nameFieldController?.dispose();
-    addressFieldController1?.dispose();
-    addressFieldController2?.dispose();
+    cityFieldController?.dispose();
+    stateFieldController?.dispose();
   }
 
   /// Additional helper methods are added here.
