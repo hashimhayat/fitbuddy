@@ -8,6 +8,7 @@ import '/widgets/profle_completion_status_card/profle_completion_status_card_wid
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -146,32 +147,32 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                       child: StreamBuilder<List<UsersRecord>>(
                                         stream: queryUsersRecord(
                                           queryBuilder: (usersRecord) =>
-                                              usersRecord.where('display_name',
-                                                  isNotEqualTo: ''),
-                                          limit: 15,
+                                              usersRecord.where('email',
+                                                  isNotEqualTo:
+                                                      currentUserEmail != ''
+                                                          ? currentUserEmail
+                                                          : null),
+                                          limit: 20,
                                         ),
                                         builder: (context, snapshot) {
                                           // Customize what your widget looks like when it's loading.
                                           if (!snapshot.hasData) {
                                             return Center(
                                               child: SizedBox(
-                                                width: 50.0,
-                                                height: 50.0,
-                                                child:
-                                                    CircularProgressIndicator(
+                                                width: 60.0,
+                                                height: 60.0,
+                                                child: SpinKitChasingDots(
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .primary,
+                                                      .tertiary,
+                                                  size: 60.0,
                                                 ),
                                               ),
                                             );
                                           }
                                           List<UsersRecord>
                                               swipeableStackUsersRecordList =
-                                              snapshot.data!
-                                                  .where((u) =>
-                                                      u.uid != currentUserUid)
-                                                  .toList();
+                                              snapshot.data!;
                                           return FlutterFlowSwipeableStack(
                                             topCardHeightFraction: 0.72,
                                             middleCardHeightFraction: 0.68,

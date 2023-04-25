@@ -80,6 +80,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'MatchPage',
           path: '/matchPage',
+          requireAuth: true,
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'MatchPage')
               : MatchPageWidget(
@@ -95,6 +96,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'ProfilePage',
           path: '/profilePage',
+          requireAuth: true,
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'ProfilePage')
               : ProfilePageWidget(),
@@ -102,6 +104,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'EditProfilePage',
           path: '/editProfilePage',
+          requireAuth: true,
           builder: (context, params) => EditProfilePageWidget(),
         ),
         FFRoute(
@@ -112,6 +115,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'ConnectionsPage',
           path: '/connectionsPage',
+          requireAuth: true,
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'ConnectionsPage')
               : ConnectionsPageWidget(),

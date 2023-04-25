@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -178,9 +177,10 @@ class _ConnectionsPageWidgetState extends State<ConnectionsPageWidget> {
                       child: Column(
                         children: [
                           Align(
-                            alignment: Alignment(0.0, 0),
-                            child: FlutterFlowButtonTabBar(
-                              useToggleButtonStyle: false,
+                            alignment: Alignment(-1.0, 0),
+                            child: TabBar(
+                              labelColor: FlutterFlowTheme.of(context).tertiary,
+                              unselectedLabelColor: Color(0xFF57636C),
                               labelStyle: FlutterFlowTheme.of(context)
                                   .titleMedium
                                   .override(
@@ -189,25 +189,15 @@ class _ConnectionsPageWidgetState extends State<ConnectionsPageWidget> {
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.w500,
                                   ),
-                              unselectedLabelStyle: FlutterFlowTheme.of(context)
-                                  .titleMedium
-                                  .override(
-                                    fontFamily: 'Outfit',
-                                    color: Color(0xFF1D2429),
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                              labelColor: Color(0xFF4B39EF),
-                              unselectedLabelColor: Color(0xFF57636C),
-                              borderWidth: 0.0,
-                              borderRadius: 0.0,
-                              elevation: 0.0,
+                              indicatorColor:
+                                  FlutterFlowTheme.of(context).tertiary,
+                              indicatorWeight: 2.0,
                               tabs: [
                                 Tab(
-                                  text: 'Connected',
+                                  text: 'Requests',
                                 ),
                                 Tab(
-                                  text: 'Pending',
+                                  text: 'Connections',
                                 ),
                               ],
                             ),
@@ -215,143 +205,6 @@ class _ConnectionsPageWidgetState extends State<ConnectionsPageWidget> {
                           Expanded(
                             child: TabBarView(
                               children: [
-                                SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 16.0, 0.0, 16.0),
-                                        child: Text(
-                                          'My Matches',
-                                          style: FlutterFlowTheme.of(context)
-                                              .headlineSmall
-                                              .override(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF1D2429),
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                        ),
-                                      ),
-                                      StreamBuilder<List<MatchesRecord>>(
-                                        stream: queryMatchesRecord(
-                                          queryBuilder: (matchesRecord) =>
-                                              matchesRecord
-                                                  .where('matched',
-                                                      isEqualTo: true)
-                                                  .where('primary_user_ref',
-                                                      isEqualTo:
-                                                          currentUserReference)
-                                                  .where('connected',
-                                                      isEqualTo: true),
-                                        ),
-                                        builder: (context, snapshot) {
-                                          // Customize what your widget looks like when it's loading.
-                                          if (!snapshot.hasData) {
-                                            return Center(
-                                              child: LinearProgressIndicator(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                              ),
-                                            );
-                                          }
-                                          List<MatchesRecord>
-                                              listViewMatchesRecordList =
-                                              snapshot.data!;
-                                          return ListView.builder(
-                                            padding: EdgeInsets.zero,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: listViewMatchesRecordList
-                                                .length,
-                                            itemBuilder:
-                                                (context, listViewIndex) {
-                                              final listViewMatchesRecord =
-                                                  listViewMatchesRecordList[
-                                                      listViewIndex];
-                                              return Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 8.0, 16.0, 0.0),
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFF1F4F8),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12.0),
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(8.0, 8.0,
-                                                                12.0, 8.0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                          child: Image.network(
-                                                            listViewMatchesRecord
-                                                                .secondaryUserImage!,
-                                                            width: 70.0,
-                                                            height: 70.0,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      16.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Text(
-                                                            listViewMatchesRecord
-                                                                .secondaryUserName!,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .titleMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  color: Color(
-                                                                      0xFF1D2429),
-                                                                  fontSize:
-                                                                      18.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
                                 SingleChildScrollView(
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -381,7 +234,7 @@ class _ConnectionsPageWidgetState extends State<ConnectionsPageWidget> {
                                                       'connected',
                                                       isEqualTo: false)
                                                   .where(
-                                                      'primary_user_ref',
+                                                      'secondary_user_ref',
                                                       isEqualTo:
                                                           currentUserReference)
                                                   .where('matched',
@@ -528,6 +381,143 @@ class _ConnectionsPageWidgetState extends State<ConnectionsPageWidget> {
                                                                   .update(
                                                                       matchesUpdateData);
                                                             },
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 16.0, 0.0, 16.0),
+                                        child: Text(
+                                          'My Matches',
+                                          style: FlutterFlowTheme.of(context)
+                                              .headlineSmall
+                                              .override(
+                                                fontFamily: 'Outfit',
+                                                color: Color(0xFF1D2429),
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ),
+                                      StreamBuilder<List<MatchesRecord>>(
+                                        stream: queryMatchesRecord(
+                                          queryBuilder: (matchesRecord) =>
+                                              matchesRecord
+                                                  .where('matched',
+                                                      isEqualTo: true)
+                                                  .where('primary_user_ref',
+                                                      isEqualTo:
+                                                          currentUserReference)
+                                                  .where('connected',
+                                                      isEqualTo: true),
+                                        ),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: LinearProgressIndicator(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                              ),
+                                            );
+                                          }
+                                          List<MatchesRecord>
+                                              listViewMatchesRecordList =
+                                              snapshot.data!;
+                                          return ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: listViewMatchesRecordList
+                                                .length,
+                                            itemBuilder:
+                                                (context, listViewIndex) {
+                                              final listViewMatchesRecord =
+                                                  listViewMatchesRecordList[
+                                                      listViewIndex];
+                                              return Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 8.0, 16.0, 0.0),
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xFFF1F4F8),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(8.0, 8.0,
+                                                                12.0, 8.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          child: Image.network(
+                                                            listViewMatchesRecord
+                                                                .secondaryUserImage!,
+                                                            width: 70.0,
+                                                            height: 70.0,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            listViewMatchesRecord
+                                                                .secondaryUserName!,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .titleMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  color: Color(
+                                                                      0xFF1D2429),
+                                                                  fontSize:
+                                                                      18.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
                                                           ),
                                                         ),
                                                       ],
