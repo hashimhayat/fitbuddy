@@ -1,14 +1,15 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_swipeable_stack.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/widgets/empty_list_widget/empty_list_widget_widget.dart';
 import '/widgets/profle_completion_status_card/profle_completion_status_card_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 import 'match_page_model.dart';
 export 'match_page_model.dart';
@@ -137,66 +138,53 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 children: [
                                   KeepAliveWidgetWrapper(
-                                    builder: (context) =>
-                                        StreamBuilder<List<UsersRecord>>(
-                                      stream: queryUsersRecord(
-                                        limit: 15,
-                                      ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 50.0,
-                                              height: 50.0,
-                                              child: CircularProgressIndicator(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
+                                    builder: (context) => Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 16.0, 0.0, 16.0),
+                                      child: StreamBuilder<List<UsersRecord>>(
+                                        stream: queryUsersRecord(
+                                          queryBuilder: (usersRecord) =>
+                                              usersRecord.where('display_name',
+                                                  isNotEqualTo: ''),
+                                          limit: 15,
+                                        ),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        }
-                                        List<UsersRecord>
-                                            swipeableStackUsersRecordList =
-                                            snapshot.data!
-                                                .where((u) =>
-                                                    u.uid != currentUserUid)
-                                                .toList();
-                                        if (swipeableStackUsersRecordList
-                                            .isEmpty) {
-                                          return Center(
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.9,
-                                              child: EmptyListWidgetWidget(),
-                                            ),
-                                          );
-                                        }
-                                        return FlutterFlowSwipeableStack(
-                                          topCardHeightFraction: 0.72,
-                                          middleCardHeightFraction: 0.68,
-                                          bottomCardHeightFraction: 0.75,
-                                          topCardWidthFraction: 0.9,
-                                          middleCardWidthFraction: 0.85,
-                                          bottomCardWidthFraction: 0.8,
-                                          onSwipeFn: (index) {},
-                                          onLeftSwipe: (index) {},
-                                          onRightSwipe: (index) {},
-                                          onUpSwipe: (index) {},
-                                          onDownSwipe: (index) {},
-                                          itemBuilder:
-                                              (context, swipeableStackIndex) {
-                                            final swipeableStackUsersRecord =
-                                                swipeableStackUsersRecordList[
-                                                    swipeableStackIndex];
-                                            return Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 0.0, 0.0, 16.0),
-                                              child: Card(
+                                            );
+                                          }
+                                          List<UsersRecord>
+                                              swipeableStackUsersRecordList =
+                                              snapshot.data!;
+                                          return FlutterFlowSwipeableStack(
+                                            topCardHeightFraction: 0.72,
+                                            middleCardHeightFraction: 0.68,
+                                            bottomCardHeightFraction: 0.75,
+                                            topCardWidthFraction: 0.9,
+                                            middleCardWidthFraction: 0.85,
+                                            bottomCardWidthFraction: 0.8,
+                                            onSwipeFn: (index) {},
+                                            onLeftSwipe: (index) {},
+                                            onRightSwipe: (index) {},
+                                            onUpSwipe: (index) {},
+                                            onDownSwipe: (index) {},
+                                            itemBuilder:
+                                                (context, swipeableStackIndex) {
+                                              final swipeableStackUsersRecord =
+                                                  swipeableStackUsersRecordList[
+                                                      swipeableStackIndex];
+                                              return Card(
                                                 clipBehavior:
                                                     Clip.antiAliasWithSaveLayer,
                                                 color:
@@ -205,29 +193,82 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                0.0),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                0.0),
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                8.0),
-                                                        topRight:
-                                                            Radius.circular(
-                                                                8.0),
-                                                      ),
-                                                      child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YWlyYm5ifGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
-                                                        width: double.infinity,
-                                                        height: 190.0,
-                                                        fit: BoxFit.cover,
+                                                    InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        logFirebaseEvent(
+                                                            'MATCH_PAGE_PAGE_mainIMage_ON_TAP');
+                                                        logFirebaseEvent(
+                                                            'mainIMage_expand_image');
+                                                        await Navigator.push(
+                                                          context,
+                                                          PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            child:
+                                                                FlutterFlowExpandedImageView(
+                                                              image:
+                                                                  CachedNetworkImage(
+                                                                imageUrl:
+                                                                    swipeableStackUsersRecord
+                                                                        .photoUrl!,
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                              ),
+                                                              allowRotation:
+                                                                  false,
+                                                              tag: swipeableStackUsersRecord
+                                                                  .photoUrl!,
+                                                              useHeroAnimation:
+                                                                  true,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Hero(
+                                                        tag:
+                                                            swipeableStackUsersRecord
+                                                                .photoUrl!,
+                                                        transitionOnUserGestures:
+                                                            true,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    0.0),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    0.0),
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    8.0),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    8.0),
+                                                          ),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            imageUrl:
+                                                                swipeableStackUsersRecord
+                                                                    .photoUrl!,
+                                                            width:
+                                                                double.infinity,
+                                                            height: 190.0,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
                                                     Padding(
@@ -282,127 +323,154 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         children: [
-                                                          Expanded(
+                                                          Text(
+                                                            swipeableStackUsersRecord
+                                                                .city!
+                                                                .maybeHandleOverflow(
+                                                              maxChars: 90,
+                                                              replacement: '…',
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodySmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  color: Color(
+                                                                      0xFF57636C),
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        4.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
                                                             child: Text(
                                                               swipeableStackUsersRecord
-                                                                  .city!
-                                                                  .maybeHandleOverflow(
-                                                                maxChars: 90,
-                                                                replacement:
-                                                                    '…',
-                                                              ),
+                                                                  .state!,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodySmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Outfit',
-                                                                    color: Color(
-                                                                        0xFF57636C),
-                                                                    fontSize:
-                                                                        14.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                  ),
+                                                                  .bodySmall,
                                                             ),
                                                           ),
                                                         ],
                                                       ),
                                                     ),
-                                                    Container(
-                                                      height: 40.0,
-                                                      decoration:
-                                                          BoxDecoration(),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  16.0,
+                                                                  8.0,
+                                                                  0.0,
+                                                                  8.0),
+                                                      child: Text(
+                                                        'Activities',
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Poppins',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     16.0,
                                                                     0.0,
-                                                                    24.0,
-                                                                    12.0),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Icon(
-                                                              Icons
-                                                                  .star_rounded,
-                                                              color: Color(
-                                                                  0xFFFFA130),
-                                                              size: 24.0,
-                                                            ),
-                                                            Padding(
+                                                                    16.0,
+                                                                    0.0),
+                                                        child: Builder(
+                                                          builder: (context) {
+                                                            final userSportsList =
+                                                                swipeableStackUsersRecord
+                                                                    .sports!
+                                                                    .toList();
+                                                            return GridView
+                                                                .builder(
                                                               padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          4.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                '4/5',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Outfit',
-                                                                      color: Color(
-                                                                          0xFF101213),
-                                                                      fontSize:
-                                                                          14.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                    ),
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              gridDelegate:
+                                                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                                                crossAxisCount:
+                                                                    4,
+                                                                crossAxisSpacing:
+                                                                    4.0,
+                                                                mainAxisSpacing:
+                                                                    4.0,
+                                                                childAspectRatio:
+                                                                    1.0,
                                                               ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          8.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                'Rating',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Outfit',
-                                                                      color: Color(
-                                                                          0xFF57636C),
-                                                                      fontSize:
-                                                                          14.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
+                                                              shrinkWrap: true,
+                                                              scrollDirection:
+                                                                  Axis.vertical,
+                                                              itemCount:
+                                                                  userSportsList
+                                                                      .length,
+                                                              itemBuilder: (context,
+                                                                  userSportsListIndex) {
+                                                                final userSportsListItem =
+                                                                    userSportsList[
+                                                                        userSportsListIndex];
+                                                                return GradientText(
+                                                                  userSportsListItem,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium,
+                                                                  colors: [
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondary
+                                                                  ],
+                                                                  gradientDirection:
+                                                                      GradientDirection
+                                                                          .ltr,
+                                                                  gradientType:
+                                                                      GradientType
+                                                                          .linear,
+                                                                );
+                                                              },
+                                                            );
+                                                          },
                                                         ),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                              ),
-                                            );
-                                          },
-                                          itemCount:
-                                              swipeableStackUsersRecordList
-                                                  .length,
-                                          controller:
-                                              _model.swipeableStackController,
-                                          enableSwipeUp: false,
-                                          enableSwipeDown: false,
-                                        );
-                                      },
+                                              );
+                                            },
+                                            itemCount:
+                                                swipeableStackUsersRecordList
+                                                    .length,
+                                            controller:
+                                                _model.swipeableStackController,
+                                            enableSwipeUp: false,
+                                            enableSwipeDown: false,
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ),
                                   KeepAliveWidgetWrapper(
