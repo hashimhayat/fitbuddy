@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_swipeable_stack.dart';
@@ -5,6 +6,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/widgets/profle_completion_status_card/profle_completion_status_card_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -175,8 +177,78 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                             middleCardWidthFraction: 0.85,
                                             bottomCardWidthFraction: 0.8,
                                             onSwipeFn: (index) {},
-                                            onLeftSwipe: (index) {},
-                                            onRightSwipe: (index) {},
+                                            onLeftSwipe: (index) async {
+                                              logFirebaseEvent(
+                                                  'MATCH_SwipeableStack_ub6i20nz_ON_LEFT_SW');
+                                              logFirebaseEvent(
+                                                  'SwipeableStack_backend_call');
+
+                                              final matchesCreateData = {
+                                                ...createMatchesRecordData(
+                                                  connected: false,
+                                                  primaryUserRef:
+                                                      currentUserReference,
+                                                  secondaryUserRef:
+                                                      swipeableStackUsersRecordList[
+                                                              index]!
+                                                          .reference,
+                                                  matched: false,
+                                                  primaryUserName:
+                                                      currentUserDisplayName,
+                                                  secondaryUserName:
+                                                      swipeableStackUsersRecordList[
+                                                              index]!
+                                                          .displayName,
+                                                  prinaryUserImage:
+                                                      currentUserPhoto,
+                                                  secondaryUserImage:
+                                                      swipeableStackUsersRecordList[
+                                                              index]!
+                                                          .photoUrl,
+                                                ),
+                                                'created_at': FieldValue
+                                                    .serverTimestamp(),
+                                              };
+                                              await MatchesRecord.collection
+                                                  .doc()
+                                                  .set(matchesCreateData);
+                                            },
+                                            onRightSwipe: (index) async {
+                                              logFirebaseEvent(
+                                                  'MATCH_SwipeableStack_ub6i20nz_ON_RIGHT_S');
+                                              logFirebaseEvent(
+                                                  'SwipeableStack_backend_call');
+
+                                              final matchesCreateData = {
+                                                ...createMatchesRecordData(
+                                                  connected: false,
+                                                  primaryUserRef:
+                                                      currentUserReference,
+                                                  secondaryUserRef:
+                                                      swipeableStackUsersRecordList[
+                                                              index]!
+                                                          .reference,
+                                                  matched: true,
+                                                  primaryUserName:
+                                                      currentUserDisplayName,
+                                                  secondaryUserName:
+                                                      swipeableStackUsersRecordList[
+                                                              index]!
+                                                          .displayName,
+                                                  prinaryUserImage:
+                                                      currentUserPhoto,
+                                                  secondaryUserImage:
+                                                      swipeableStackUsersRecordList[
+                                                              index]!
+                                                          .photoUrl,
+                                                ),
+                                                'created_at': FieldValue
+                                                    .serverTimestamp(),
+                                              };
+                                              await MatchesRecord.collection
+                                                  .doc()
+                                                  .set(matchesCreateData);
+                                            },
                                             onUpSwipe: (index) {},
                                             onDownSwipe: (index) {},
                                             itemBuilder:

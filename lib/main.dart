@@ -126,6 +126,7 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'MatchPage': MatchPageWidget(),
+      'ConnectionsPage': ConnectionsPageWidget(),
       'ProfilePage': ProfilePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
@@ -150,6 +151,14 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Match',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.chat_outlined,
+              size: 24.0,
+            ),
+            label: 'Shop',
             tooltip: '',
           ),
           BottomNavigationBarItem(

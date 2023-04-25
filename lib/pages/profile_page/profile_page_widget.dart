@@ -557,7 +557,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                         await authManager.signOut();
                         GoRouter.of(context).clearRedirectLocation();
 
-                        context.goNamedAuth('AuthPage', mounted);
+                        context.goNamedAuth('SignUpPage', mounted);
                       },
                       child: Container(
                         width: double.infinity,

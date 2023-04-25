@@ -8,18 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'auth_page_model.dart';
-export 'auth_page_model.dart';
+import 'sign_up_page_model.dart';
+export 'sign_up_page_model.dart';
 
-class AuthPageWidget extends StatefulWidget {
-  const AuthPageWidget({Key? key}) : super(key: key);
+class SignUpPageWidget extends StatefulWidget {
+  const SignUpPageWidget({Key? key}) : super(key: key);
 
   @override
-  _AuthPageWidgetState createState() => _AuthPageWidgetState();
+  _SignUpPageWidgetState createState() => _SignUpPageWidgetState();
 }
 
-class _AuthPageWidgetState extends State<AuthPageWidget> {
-  late AuthPageModel _model;
+class _SignUpPageWidgetState extends State<SignUpPageWidget> {
+  late SignUpPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
@@ -27,9 +27,9 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AuthPageModel());
+    _model = createModel(context, () => SignUpPageModel());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'AuthPage'});
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'SignUpPage'});
     _model.emailAddressController ??= TextEditingController();
     _model.passwordController ??= TextEditingController();
     _model.passwordConfirmController ??= TextEditingController();
@@ -47,7 +47,7 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
   @override
   Widget build(BuildContext context) {
     return Title(
-        title: 'AuthPage',
+        title: 'SignUpPage',
         color: FlutterFlowTheme.of(context).primary,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
@@ -414,7 +414,7 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                       child: FFButtonWidget(
                                         onPressed: () async {
                                           logFirebaseEvent(
-                                              'AUTH_PAGE_PAGE_CREATE_ACCOUNT_BTN_ON_TAP');
+                                              'SIGN_UP_CREATE_ACCOUNT_BTN_ON_TAP');
                                           logFirebaseEvent('Button_auth');
                                           GoRouter.of(context)
                                               .prepareAuthEvent();
@@ -540,7 +540,7 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                       child: FFButtonWidget(
                                         onPressed: () async {
                                           logFirebaseEvent(
-                                              'AUTH_CONTINUE_WITH_GOOGLE_BTN_ON_TAP');
+                                              'SIGN_UP_CONTINUE_WITH_GOOGLE_BTN_ON_TAP');
                                           logFirebaseEvent('Button_auth');
                                           GoRouter.of(context)
                                               .prepareAuthEvent();
@@ -605,7 +605,7 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                                 style: TextStyle(),
                                               ),
                                               TextSpan(
-                                                text: ' Sign In here',
+                                                text: ' Sign in here',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -618,6 +618,19 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
+                                                mouseCursor:
+                                                    SystemMouseCursors.click,
+                                                recognizer:
+                                                    TapGestureRecognizer()
+                                                      ..onTap = () async {
+                                                        logFirebaseEvent(
+                                                            'SIGN_UP_RichTextSpan_964a0u2p_ON_TAP');
+                                                        logFirebaseEvent(
+                                                            'RichTextSpan_navigate_to');
+
+                                                        context.pushNamed(
+                                                            'LoginPage');
+                                                      },
                                               )
                                             ],
                                             style: FlutterFlowTheme.of(context)
