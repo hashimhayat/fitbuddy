@@ -91,6 +91,13 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.about;
+    if (value != null) {
+      result
+        ..add('about')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -157,6 +164,10 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.state = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'about':
+          result.about = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -192,6 +203,8 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? state;
   @override
+  final String? about;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -208,6 +221,7 @@ class _$UsersRecord extends UsersRecord {
       this.playingSchedule,
       this.city,
       this.state,
+      this.about,
       this.ffRef})
       : super._();
 
@@ -232,6 +246,7 @@ class _$UsersRecord extends UsersRecord {
         playingSchedule == other.playingSchedule &&
         city == other.city &&
         state == other.state &&
+        about == other.about &&
         ffRef == other.ffRef;
   }
 
@@ -248,6 +263,7 @@ class _$UsersRecord extends UsersRecord {
     _$hash = $jc(_$hash, playingSchedule.hashCode);
     _$hash = $jc(_$hash, city.hashCode);
     _$hash = $jc(_$hash, state.hashCode);
+    _$hash = $jc(_$hash, about.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -266,6 +282,7 @@ class _$UsersRecord extends UsersRecord {
           ..add('playingSchedule', playingSchedule)
           ..add('city', city)
           ..add('state', state)
+          ..add('about', about)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -317,6 +334,10 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get state => _$this._state;
   set state(String? state) => _$this._state = state;
 
+  String? _about;
+  String? get about => _$this._about;
+  set about(String? about) => _$this._about = about;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -338,6 +359,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _playingSchedule = $v.playingSchedule?.toBuilder();
       _city = $v.city;
       _state = $v.state;
+      _about = $v.about;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -373,6 +395,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
               playingSchedule: _playingSchedule?.build(),
               city: city,
               state: state,
+              about: about,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

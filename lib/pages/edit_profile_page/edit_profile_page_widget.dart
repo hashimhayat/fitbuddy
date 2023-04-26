@@ -43,6 +43,8 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
         text: valueOrDefault(currentUserDocument?.city, ''));
     _model.stateFieldController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.state, ''));
+    _model.aboutFieldController ??= TextEditingController(
+        text: valueOrDefault(currentUserDocument?.about, ''));
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -86,7 +88,10 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                   if ((currentUserDisplayName == '') ||
                       (currentUserPhoto == '') ||
                       ((currentUserDocument?.sports?.toList() ?? []).length ==
-                          0)) {
+                          0) ||
+                      (valueOrDefault(currentUserDocument?.about, '') == '') ||
+                      (valueOrDefault(currentUserDocument?.city, '') == '') ||
+                      (valueOrDefault(currentUserDocument?.state, '') == '')) {
                     logFirebaseEvent('IconButton_update_app_state');
                     FFAppState().update(() {
                       FFAppState().isUserProfileComplete = false;
@@ -127,111 +132,146 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                2.0, 8.0, 2.0, 16.0),
-                            child: AuthUserStreamWidget(
-                              builder: (context) => InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  logFirebaseEvent(
-                                      'EDIT_PROFILE_Image_wgqfyn14_ON_TAP');
-                                  logFirebaseEvent(
-                                      'Image_upload_media_to_firebase');
-                                  final selectedMedia =
-                                      await selectMediaWithSourceBottomSheet(
-                                    context: context,
-                                    maxWidth: 400.00,
-                                    maxHeight: 400.00,
-                                    imageQuality: 100,
-                                    allowPhoto: true,
-                                    includeDimensions: true,
-                                    includeBlurHash: true,
-                                  );
-                                  if (selectedMedia != null &&
-                                      selectedMedia.every((m) =>
-                                          validateFileFormat(
-                                              m.storagePath, context))) {
-                                    setState(
-                                        () => _model.isDataUploading = true);
-                                    var selectedUploadedFiles =
-                                        <FFUploadedFile>[];
-                                    var downloadUrls = <String>[];
-                                    try {
-                                      showUploadMessage(
-                                        context,
-                                        'Uploading file...',
-                                        showLoading: true,
-                                      );
-                                      selectedUploadedFiles = selectedMedia
-                                          .map((m) => FFUploadedFile(
-                                                name: m.storagePath
-                                                    .split('/')
-                                                    .last,
-                                                bytes: m.bytes,
-                                                height: m.dimensions?.height,
-                                                width: m.dimensions?.width,
-                                                blurHash: m.blurHash,
-                                              ))
-                                          .toList();
+                          Container(
+                            width: 100.0,
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      2.0, 8.0, 2.0, 16.0),
+                                  child: AuthUserStreamWidget(
+                                    builder: (context) => InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        logFirebaseEvent(
+                                            'EDIT_PROFILE_Image_wgqfyn14_ON_TAP');
+                                        logFirebaseEvent(
+                                            'Image_upload_media_to_firebase');
+                                        final selectedMedia =
+                                            await selectMediaWithSourceBottomSheet(
+                                          context: context,
+                                          maxWidth: 400.00,
+                                          maxHeight: 400.00,
+                                          imageQuality: 100,
+                                          allowPhoto: true,
+                                          includeDimensions: true,
+                                          includeBlurHash: true,
+                                        );
+                                        if (selectedMedia != null &&
+                                            selectedMedia.every((m) =>
+                                                validateFileFormat(
+                                                    m.storagePath, context))) {
+                                          setState(() =>
+                                              _model.isDataUploading = true);
+                                          var selectedUploadedFiles =
+                                              <FFUploadedFile>[];
+                                          var downloadUrls = <String>[];
+                                          try {
+                                            showUploadMessage(
+                                              context,
+                                              'Uploading file...',
+                                              showLoading: true,
+                                            );
+                                            selectedUploadedFiles =
+                                                selectedMedia
+                                                    .map((m) => FFUploadedFile(
+                                                          name: m.storagePath
+                                                              .split('/')
+                                                              .last,
+                                                          bytes: m.bytes,
+                                                          height: m.dimensions
+                                                              ?.height,
+                                                          width: m.dimensions
+                                                              ?.width,
+                                                          blurHash: m.blurHash,
+                                                        ))
+                                                    .toList();
 
-                                      downloadUrls = (await Future.wait(
-                                        selectedMedia.map(
-                                          (m) async => await uploadData(
-                                              m.storagePath, m.bytes),
+                                            downloadUrls = (await Future.wait(
+                                              selectedMedia.map(
+                                                (m) async => await uploadData(
+                                                    m.storagePath, m.bytes),
+                                              ),
+                                            ))
+                                                .where((u) => u != null)
+                                                .map((u) => u!)
+                                                .toList();
+                                          } finally {
+                                            ScaffoldMessenger.of(context)
+                                                .hideCurrentSnackBar();
+                                            _model.isDataUploading = false;
+                                          }
+                                          if (selectedUploadedFiles.length ==
+                                                  selectedMedia.length &&
+                                              downloadUrls.length ==
+                                                  selectedMedia.length) {
+                                            setState(() {
+                                              _model.uploadedLocalFile =
+                                                  selectedUploadedFiles.first;
+                                              _model.uploadedFileUrl =
+                                                  downloadUrls.first;
+                                            });
+                                            showUploadMessage(
+                                                context, 'Success!');
+                                          } else {
+                                            setState(() {});
+                                            showUploadMessage(context,
+                                                'Failed to upload data');
+                                            return;
+                                          }
+                                        }
+
+                                        logFirebaseEvent('Image_backend_call');
+
+                                        final usersUpdateData =
+                                            createUsersRecordData(
+                                          photoUrl: _model.uploadedFileUrl,
+                                        );
+                                        await currentUserReference!
+                                            .update(usersUpdateData);
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(80.0),
+                                        child: CachedNetworkImage(
+                                          imageUrl: valueOrDefault<String>(
+                                            currentUserPhoto,
+                                            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
+                                          ),
+                                          width: 88.0,
+                                          height: 88.0,
+                                          fit: BoxFit.cover,
                                         ),
-                                      ))
-                                          .where((u) => u != null)
-                                          .map((u) => u!)
-                                          .toList();
-                                    } finally {
-                                      ScaffoldMessenger.of(context)
-                                          .hideCurrentSnackBar();
-                                      _model.isDataUploading = false;
-                                    }
-                                    if (selectedUploadedFiles.length ==
-                                            selectedMedia.length &&
-                                        downloadUrls.length ==
-                                            selectedMedia.length) {
-                                      setState(() {
-                                        _model.uploadedLocalFile =
-                                            selectedUploadedFiles.first;
-                                        _model.uploadedFileUrl =
-                                            downloadUrls.first;
-                                      });
-                                      showUploadMessage(context, 'Success!');
-                                    } else {
-                                      setState(() {});
-                                      showUploadMessage(
-                                          context, 'Failed to upload data');
-                                      return;
-                                    }
-                                  }
-
-                                  logFirebaseEvent('Image_backend_call');
-
-                                  final usersUpdateData = createUsersRecordData(
-                                    photoUrl: _model.uploadedFileUrl,
-                                  );
-                                  await currentUserReference!
-                                      .update(usersUpdateData);
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(80.0),
-                                  child: CachedNetworkImage(
-                                    imageUrl: valueOrDefault<String>(
-                                      currentUserPhoto,
-                                      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
+                                      ),
                                     ),
-                                    width: 88.0,
-                                    height: 88.0,
-                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(0.81, -1.06),
+                                  child: Text(
+                                    '*',
+                                    textAlign: TextAlign.start,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 22.0,
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                12.0, 12.0, 12.0, 12.0),
+                            child: Text(
+                              'The fields marked with * are required and must be filled in order to meet people in community.',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context).bodyMedium,
                             ),
                           ),
                           Column(
@@ -239,7 +279,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Name',
+                                'Name*',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(
@@ -343,7 +383,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'City',
+                                  'City*',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
                                       .override(
@@ -447,7 +487,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'State',
+                                  'State*',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
                                       .override(
@@ -548,11 +588,120 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 12.0, 0.0, 0.0),
                             child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'About me*',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyLarge
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 4.0, 0.0, 0.0),
+                                  child: AuthUserStreamWidget(
+                                    builder: (context) => TextFormField(
+                                      controller: _model.aboutFieldController,
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        '_model.aboutFieldController',
+                                        Duration(milliseconds: 2000),
+                                        () async {
+                                          logFirebaseEvent(
+                                              'EDIT_PROFILE_aboutField_ON_TEXTFIELD_CHA');
+                                          logFirebaseEvent(
+                                              'aboutField_backend_call');
+
+                                          final usersUpdateData =
+                                              createUsersRecordData(
+                                            state: _model
+                                                .aboutFieldController.text,
+                                          );
+                                          await currentUserReference!
+                                              .update(usersUpdateData);
+                                        },
+                                      ),
+                                      onFieldSubmitted: (_) async {
+                                        logFirebaseEvent(
+                                            'EDIT_PROFILE_aboutField_ON_TEXTFIELD_SUB');
+                                        logFirebaseEvent(
+                                            'aboutField_backend_call');
+
+                                        final usersUpdateData =
+                                            createUsersRecordData(
+                                          about:
+                                              _model.aboutFieldController.text,
+                                        );
+                                        await currentUserReference!
+                                            .update(usersUpdateData);
+                                      },
+                                      autofocus: true,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium,
+                                        hintText:
+                                            'Tell us something fun about yourself',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .bodySmall,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiary,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiary,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                      validator: _model
+                                          .aboutFieldControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 12.0, 0.0, 0.0),
+                            child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'What sports do you play?',
+                                  'What sports do you play?*',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyLarge
                                       .override(
@@ -687,7 +836,16 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                     ((currentUserDocument?.sports?.toList() ??
                                                 [])
                                             .length ==
-                                        0)) {
+                                        0) ||
+                                    (valueOrDefault(
+                                            currentUserDocument?.about, '') ==
+                                        '') ||
+                                    (valueOrDefault(
+                                            currentUserDocument?.city, '') ==
+                                        '') ||
+                                    (valueOrDefault(
+                                            currentUserDocument?.state, '') ==
+                                        '')) {
                                   logFirebaseEvent('Button_update_app_state');
                                   FFAppState().update(() {
                                     FFAppState().isUserProfileComplete = false;

@@ -49,14 +49,17 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
       logFirebaseEvent('MATCH_PAGE_PAGE_MatchPage_ON_INIT_STATE');
       if ((currentUserDisplayName == '') ||
           (currentUserPhoto == '') ||
-          ((currentUserDocument?.sports?.toList() ?? []).length == 0)) {
+          ((currentUserDocument?.sports?.toList() ?? []).length == 0) ||
+          (valueOrDefault(currentUserDocument?.about, '') == '') ||
+          (valueOrDefault(currentUserDocument?.city, '') == '') ||
+          (valueOrDefault(currentUserDocument?.state, '') == '')) {
         logFirebaseEvent('MatchPage_update_app_state');
-        setState(() {
+        FFAppState().update(() {
           FFAppState().isUserProfileComplete = false;
         });
       } else {
         logFirebaseEvent('MatchPage_update_app_state');
-        setState(() {
+        FFAppState().update(() {
           FFAppState().isUserProfileComplete = true;
         });
       }

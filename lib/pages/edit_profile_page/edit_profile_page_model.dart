@@ -33,6 +33,9 @@ class EditProfilePageModel extends FlutterFlowModel {
   // State field(s) for stateField widget.
   TextEditingController? stateFieldController;
   String? Function(BuildContext, String?)? stateFieldControllerValidator;
+  // State field(s) for aboutField widget.
+  TextEditingController? aboutFieldController;
+  String? Function(BuildContext, String?)? aboutFieldControllerValidator;
   // State field(s) for SportsCheckboxGroup widget.
   List<String>? sportsCheckboxGroupValues;
   FormFieldController<List<String>>? sportsCheckboxGroupValueController;
@@ -48,6 +51,7 @@ class EditProfilePageModel extends FlutterFlowModel {
     nameFieldController?.dispose();
     cityFieldController?.dispose();
     stateFieldController?.dispose();
+    aboutFieldController?.dispose();
   }
 
   /// Additional helper methods are added here.
