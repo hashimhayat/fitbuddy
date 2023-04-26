@@ -61,6 +61,43 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.sports;
+    if (value != null) {
+      result
+        ..add('sports')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
+    value = object.playingSchedule;
+    if (value != null) {
+      result
+        ..add('playing_schedule')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
+    value = object.city;
+    if (value != null) {
+      result
+        ..add('city')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.state;
+    if (value != null) {
+      result
+        ..add('state')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.about;
+    if (value != null) {
+      result
+        ..add('about')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -107,6 +144,30 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.phoneNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'sports':
+          result.sports.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'playing_schedule':
+          result.playingSchedule.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'city':
+          result.city = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'state':
+          result.state = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'about':
+          result.about = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -134,6 +195,16 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? phoneNumber;
   @override
+  final BuiltList<String>? sports;
+  @override
+  final BuiltList<String>? playingSchedule;
+  @override
+  final String? city;
+  @override
+  final String? state;
+  @override
+  final String? about;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -146,6 +217,11 @@ class _$UsersRecord extends UsersRecord {
       this.uid,
       this.createdTime,
       this.phoneNumber,
+      this.sports,
+      this.playingSchedule,
+      this.city,
+      this.state,
+      this.about,
       this.ffRef})
       : super._();
 
@@ -166,6 +242,11 @@ class _$UsersRecord extends UsersRecord {
         uid == other.uid &&
         createdTime == other.createdTime &&
         phoneNumber == other.phoneNumber &&
+        sports == other.sports &&
+        playingSchedule == other.playingSchedule &&
+        city == other.city &&
+        state == other.state &&
+        about == other.about &&
         ffRef == other.ffRef;
   }
 
@@ -178,6 +259,11 @@ class _$UsersRecord extends UsersRecord {
     _$hash = $jc(_$hash, uid.hashCode);
     _$hash = $jc(_$hash, createdTime.hashCode);
     _$hash = $jc(_$hash, phoneNumber.hashCode);
+    _$hash = $jc(_$hash, sports.hashCode);
+    _$hash = $jc(_$hash, playingSchedule.hashCode);
+    _$hash = $jc(_$hash, city.hashCode);
+    _$hash = $jc(_$hash, state.hashCode);
+    _$hash = $jc(_$hash, about.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -192,6 +278,11 @@ class _$UsersRecord extends UsersRecord {
           ..add('uid', uid)
           ..add('createdTime', createdTime)
           ..add('phoneNumber', phoneNumber)
+          ..add('sports', sports)
+          ..add('playingSchedule', playingSchedule)
+          ..add('city', city)
+          ..add('state', state)
+          ..add('about', about)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -224,6 +315,29 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get phoneNumber => _$this._phoneNumber;
   set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
 
+  ListBuilder<String>? _sports;
+  ListBuilder<String> get sports =>
+      _$this._sports ??= new ListBuilder<String>();
+  set sports(ListBuilder<String>? sports) => _$this._sports = sports;
+
+  ListBuilder<String>? _playingSchedule;
+  ListBuilder<String> get playingSchedule =>
+      _$this._playingSchedule ??= new ListBuilder<String>();
+  set playingSchedule(ListBuilder<String>? playingSchedule) =>
+      _$this._playingSchedule = playingSchedule;
+
+  String? _city;
+  String? get city => _$this._city;
+  set city(String? city) => _$this._city = city;
+
+  String? _state;
+  String? get state => _$this._state;
+  set state(String? state) => _$this._state = state;
+
+  String? _about;
+  String? get about => _$this._about;
+  set about(String? about) => _$this._about = about;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -241,6 +355,11 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _uid = $v.uid;
       _createdTime = $v.createdTime;
       _phoneNumber = $v.phoneNumber;
+      _sports = $v.sports?.toBuilder();
+      _playingSchedule = $v.playingSchedule?.toBuilder();
+      _city = $v.city;
+      _state = $v.state;
+      _about = $v.about;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -262,15 +381,35 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   UsersRecord build() => _build();
 
   _$UsersRecord _build() {
-    final _$result = _$v ??
-        new _$UsersRecord._(
-            email: email,
-            displayName: displayName,
-            photoUrl: photoUrl,
-            uid: uid,
-            createdTime: createdTime,
-            phoneNumber: phoneNumber,
-            ffRef: ffRef);
+    _$UsersRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$UsersRecord._(
+              email: email,
+              displayName: displayName,
+              photoUrl: photoUrl,
+              uid: uid,
+              createdTime: createdTime,
+              phoneNumber: phoneNumber,
+              sports: _sports?.build(),
+              playingSchedule: _playingSchedule?.build(),
+              city: city,
+              state: state,
+              about: about,
+              ffRef: ffRef);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'sports';
+        _sports?.build();
+        _$failedField = 'playingSchedule';
+        _playingSchedule?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'UsersRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,8 @@ import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
+import 'package:flutter/foundation.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
@@ -20,7 +23,16 @@ void main() async {
 
   await FlutterFlowTheme.initialize();
 
-  runApp(MyApp());
+  final appState = FFAppState(); // Initialize FFAppState
+
+  if (!kIsWeb) {
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  }
+
+  runApp(ChangeNotifierProvider(
+    create: (context) => appState,
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -120,6 +132,7 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'MatchPage': MatchPageWidget(),
+      'ConnectionsPage': ConnectionsPageWidget(),
       'ProfilePage': ProfilePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
@@ -144,6 +157,14 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Match',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.chat_outlined,
+              size: 24.0,
+            ),
+            label: 'Shop',
             tooltip: '',
           ),
           BottomNavigationBarItem(

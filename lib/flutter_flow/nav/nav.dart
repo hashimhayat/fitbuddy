@@ -69,32 +69,56 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? NavBarPage() : AuthPageWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : SignUpPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : AuthPageWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : SignUpPageWidget(),
         ),
         FFRoute(
           name: 'MatchPage',
           path: '/matchPage',
+          requireAuth: true,
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'MatchPage')
-              : MatchPageWidget(),
+              : MatchPageWidget(
+                  isProfileCompleted:
+                      params.getParam('isProfileCompleted', ParamType.bool),
+                ),
         ),
         FFRoute(
-          name: 'AuthPage',
-          path: '/authPage',
-          builder: (context, params) => AuthPageWidget(),
+          name: 'SignUpPage',
+          path: '/signUpPage',
+          builder: (context, params) => SignUpPageWidget(),
         ),
         FFRoute(
           name: 'ProfilePage',
           path: '/profilePage',
+          requireAuth: true,
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'ProfilePage')
               : ProfilePageWidget(),
+        ),
+        FFRoute(
+          name: 'EditProfilePage',
+          path: '/editProfilePage',
+          requireAuth: true,
+          builder: (context, params) => EditProfilePageWidget(),
+        ),
+        FFRoute(
+          name: 'LoginPage',
+          path: '/loginPage',
+          builder: (context, params) => LoginPageWidget(),
+        ),
+        FFRoute(
+          name: 'ConnectionsPage',
+          path: '/connectionsPage',
+          requireAuth: true,
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'ConnectionsPage')
+              : ConnectionsPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
@@ -263,7 +287,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/authPage';
+            return '/signUpPage';
           }
           return null;
         },
@@ -320,5 +344,9 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(
+        hasTransition: true,
+        transitionType: PageTransitionType.fade,
+        duration: Duration(milliseconds: 120),
+      );
 }
