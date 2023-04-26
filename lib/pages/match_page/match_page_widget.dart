@@ -334,9 +334,9 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                                               padding:
                                                                   EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          12.0,
+                                                                          4.0,
                                                                           8.0,
-                                                                          12.0,
+                                                                          4.0,
                                                                           8.0),
                                                               child: Card(
                                                                 clipBehavior: Clip
