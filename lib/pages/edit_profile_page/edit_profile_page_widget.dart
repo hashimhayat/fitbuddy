@@ -617,7 +617,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
 
                                           final usersUpdateData =
                                               createUsersRecordData(
-                                            state: _model
+                                            about: _model
                                                 .aboutFieldController.text,
                                           );
                                           await currentUserReference!
