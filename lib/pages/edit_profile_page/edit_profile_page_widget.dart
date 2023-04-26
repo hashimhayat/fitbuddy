@@ -684,6 +684,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                       ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium,
+                                      maxLines: 3,
                                       validator: _model
                                           .aboutFieldControllerValidator
                                           .asValidator(context),
