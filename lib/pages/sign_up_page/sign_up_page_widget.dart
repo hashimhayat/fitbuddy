@@ -46,6 +46,8 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Title(
         title: 'SignUpPage',
         color: FlutterFlowTheme.of(context).primary,

@@ -44,6 +44,8 @@ class _ConnectionsPageWidgetState extends State<ConnectionsPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Title(
         title: 'ConnectionsPage',
         color: FlutterFlowTheme.of(context).primary,

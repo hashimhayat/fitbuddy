@@ -56,6 +56,8 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Title(
         title: 'EditProfilePage',
         color: FlutterFlowTheme.of(context).primary,
@@ -81,6 +83,20 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                   logFirebaseEvent('EDIT_PROFILE_arrow_back_rounded_ICN_ON_T');
                   logFirebaseEvent('IconButton_navigate_back');
                   context.pop();
+                  if ((currentUserDisplayName == '') ||
+                      (currentUserPhoto == '') ||
+                      ((currentUserDocument?.sports?.toList() ?? []).length ==
+                          0)) {
+                    logFirebaseEvent('IconButton_update_app_state');
+                    FFAppState().update(() {
+                      FFAppState().isUserProfileComplete = false;
+                    });
+                  } else {
+                    logFirebaseEvent('IconButton_update_app_state');
+                    FFAppState().update(() {
+                      FFAppState().isUserProfileComplete = true;
+                    });
+                  }
                 },
               ),
               title: Text(
@@ -666,6 +682,22 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                     'EDIT_PROFILE_PAGE_PAGE_SUBMIT_BTN_ON_TAP');
                                 logFirebaseEvent('Button_navigate_back');
                                 context.safePop();
+                                if ((currentUserDisplayName == '') ||
+                                    (currentUserPhoto == '') ||
+                                    ((currentUserDocument?.sports?.toList() ??
+                                                [])
+                                            .length ==
+                                        0)) {
+                                  logFirebaseEvent('Button_update_app_state');
+                                  FFAppState().update(() {
+                                    FFAppState().isUserProfileComplete = false;
+                                  });
+                                } else {
+                                  logFirebaseEvent('Button_update_app_state');
+                                  FFAppState().update(() {
+                                    FFAppState().isUserProfileComplete = true;
+                                  });
+                                }
                               },
                               text: 'Submit',
                               options: FFButtonOptions(

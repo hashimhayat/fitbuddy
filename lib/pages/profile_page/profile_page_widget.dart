@@ -44,6 +44,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Title(
         title: 'ProfilePage',
         color: FlutterFlowTheme.of(context).primary,
