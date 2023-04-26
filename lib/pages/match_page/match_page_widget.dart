@@ -679,7 +679,7 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                           ),
                           if (FFAppState().isUserProfileComplete == false)
                             Container(
-                              width: 10.0,
+                              width: double.infinity,
                               height: double.infinity,
                               decoration: BoxDecoration(
                                 color: Color(0x00FFFFFF),

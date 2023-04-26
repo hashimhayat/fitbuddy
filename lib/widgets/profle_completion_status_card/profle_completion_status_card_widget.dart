@@ -47,6 +47,7 @@ class _ProfleCompletionStatusCardWidgetState
       padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
       child: Container(
         width: double.infinity,
+        height: 150.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           borderRadius: BorderRadius.circular(8.0),
@@ -56,7 +57,7 @@ class _ProfleCompletionStatusCardWidgetState
           children: [
             Expanded(
               child: Container(
-                height: 148.0,
+                height: double.infinity,
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                 ),
@@ -122,7 +123,7 @@ class _ProfleCompletionStatusCardWidgetState
             ),
             Container(
               width: 50.0,
-              height: 100.0,
+              height: double.infinity,
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).secondaryBackground,
               ),
