@@ -48,14 +48,7 @@ class _ProfleCompletionStatusCardWidgetState
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 7.0,
-              color: Color(0x2F1D2429),
-              offset: Offset(0.0, 3.0),
-            )
-          ],
+          color: FlutterFlowTheme.of(context).secondaryBackground,
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Row(
@@ -63,7 +56,7 @@ class _ProfleCompletionStatusCardWidgetState
           children: [
             Expanded(
               child: Container(
-                height: 127.6,
+                height: 148.0,
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                 ),
@@ -74,39 +67,49 @@ class _ProfleCompletionStatusCardWidgetState
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Let\'s set you up',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Outfit',
-                              color: Color(0xFF39D2C0),
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                            ),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 4.0),
+                        child: Text(
+                          'Let\'s set you up',
+                          style: FlutterFlowTheme.of(context)
+                              .bodyLarge
+                              .override(
+                                fontFamily: 'Poppins',
+                                color: FlutterFlowTheme.of(context).secondary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
                       ),
                       Divider(
                         height: 16.0,
                         thickness: 2.0,
-                        color: Color(0xFFF1F4F8),
-                      ),
-                      Text(
-                        'Complete profile',
-                        style:
-                            FlutterFlowTheme.of(context).titleMedium.override(
-                                  fontFamily: 'Outfit',
-                                  color: Color(0xFF101213),
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                        color: FlutterFlowTheme.of(context).accent2,
                       ),
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                        child: Text(
+                          'Complete profile',
+                          style: FlutterFlowTheme.of(context)
+                              .titleMedium
+                              .override(
+                                fontFamily: 'Outfit',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
                         child: Text(
                           'Click on this card to complete your profile and let\'s find your perfect match! ',
                           style:
                               FlutterFlowTheme.of(context).bodySmall.override(
                                     fontFamily: 'Outfit',
-                                    color: Color(0xFF57636C),
+                                    color: FlutterFlowTheme.of(context).accent2,
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.normal,
                                   ),

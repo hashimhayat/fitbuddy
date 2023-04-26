@@ -419,7 +419,7 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                                                           fontFamily:
                                                                               'Outfit',
                                                                           color:
-                                                                              Color(0xFF101213),
+                                                                              FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
                                                                               20.0,
                                                                           fontWeight:
@@ -458,8 +458,8 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                                                       .override(
                                                                         fontFamily:
                                                                             'Outfit',
-                                                                        color: Color(
-                                                                            0xFF57636C),
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
                                                                         fontSize:
                                                                             14.0,
                                                                         fontWeight:
@@ -478,7 +478,13 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                                                         .state!,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .bodySmall,
+                                                                        .bodySmall
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Poppins',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryText,
+                                                                        ),
                                                                   ),
                                                                 ),
                                                               ],
