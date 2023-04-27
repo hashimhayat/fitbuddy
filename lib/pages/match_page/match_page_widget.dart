@@ -556,8 +556,8 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                                                               padding: EdgeInsets.zero,
                                                                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                                                                 crossAxisCount: 4,
-                                                                                crossAxisSpacing: 4.0,
-                                                                                mainAxisSpacing: 4.0,
+                                                                                crossAxisSpacing: 10.0,
+                                                                                mainAxisSpacing: 8.0,
                                                                                 childAspectRatio: 1.0,
                                                                               ),
                                                                               shrinkWrap: true,
