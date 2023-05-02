@@ -66,7 +66,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                     ),
               ),
               actions: [],
-              centerTitle: false,
+              centerTitle: true,
               elevation: 0.0,
             ),
             body: SafeArea(

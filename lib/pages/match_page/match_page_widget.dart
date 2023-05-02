@@ -101,7 +101,7 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                     ),
               ),
               actions: [],
-              centerTitle: false,
+              centerTitle: true,
               elevation: 2.0,
             ),
             body: SafeArea(

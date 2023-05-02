@@ -67,7 +67,7 @@ class _ConnectionsPageWidgetState extends State<ConnectionsPageWidget> {
                     ),
               ),
               actions: [],
-              centerTitle: false,
+              centerTitle: true,
               elevation: 0.0,
             ),
             body: Column(
