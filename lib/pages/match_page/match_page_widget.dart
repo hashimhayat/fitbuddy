@@ -510,7 +510,8 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                                                             8.0),
                                                                         child:
                                                                             Text(
-                                                                          'Just a heads up, there are a few required fields marked with a * that you\'ll need to fill out in order to connect with others. Don\'t worry though, we\'ve made the process as easy and user-friendly as possible.',
+                                                                          swipeableStackUsersRecord
+                                                                              .about!,
                                                                           textAlign:
                                                                               TextAlign.start,
                                                                           style: FlutterFlowTheme.of(context)
@@ -556,7 +557,7 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                                                               padding: EdgeInsets.zero,
                                                                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                                                                 crossAxisCount: 4,
-                                                                                crossAxisSpacing: 10.0,
+                                                                                crossAxisSpacing: 8.0,
                                                                                 mainAxisSpacing: 8.0,
                                                                                 childAspectRatio: 1.0,
                                                                               ),
@@ -633,7 +634,7 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                   if (FFAppState().isUserProfileComplete ==
                                       false)
                                     Container(
-                                      width: double.infinity,
+                                      width: 1.0,
                                       height: double.infinity,
                                       decoration: BoxDecoration(
                                         color: Color(0x00FFFFFF),

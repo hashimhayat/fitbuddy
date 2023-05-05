@@ -793,8 +793,21 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                         'Monthly',
                                         'I do not play regularly'
                                       ],
-                                      onChanged: (val) => setState(() => _model
-                                          .scheduleCheckboxGroupValues = val),
+                                      onChanged: (val) async {
+                                        setState(() => _model
+                                            .scheduleCheckboxGroupValues = val);
+                                        logFirebaseEvent(
+                                            'EDIT_PROFILE_ScheduleCheckboxGroup_ON_FO');
+                                        logFirebaseEvent(
+                                            'ScheduleCheckboxGroup_backend_call');
+
+                                        final usersUpdateData = {
+                                          'playing_schedule': _model
+                                              .scheduleCheckboxGroupValues,
+                                        };
+                                        await currentUserReference!
+                                            .update(usersUpdateData);
+                                      },
                                       controller: _model
                                               .scheduleCheckboxGroupValueController ??=
                                           FormFieldController<List<String>>(
