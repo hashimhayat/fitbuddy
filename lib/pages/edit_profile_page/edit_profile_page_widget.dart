@@ -84,7 +84,7 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                 onPressed: () async {
                   logFirebaseEvent('EDIT_PROFILE_arrow_back_rounded_ICN_ON_T');
                   logFirebaseEvent('IconButton_navigate_back');
-                  context.pop();
+                  context.safePop();
                   if ((currentUserDisplayName == '') ||
                       (currentUserPhoto == '') ||
                       ((currentUserDocument?.sports?.toList() ?? []).length ==
