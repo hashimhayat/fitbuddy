@@ -3,6 +3,7 @@ import 'package:from_css_color/from_css_color.dart';
 
 import 'users_record.dart';
 import 'matches_record.dart';
+import 'waitlist_record.dart';
 
 import 'index.dart';
 
@@ -15,6 +16,7 @@ const kDocumentReferenceField = 'Document__Reference__Field';
 @SerializersFor(const [
   UsersRecord,
   MatchesRecord,
+  WaitlistRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

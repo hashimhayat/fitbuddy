@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_swipeable_stack.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/widgets/profle_completion_status_card/profle_completion_status_card_widget.dart';
 import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -601,27 +602,433 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                                   ),
                                                 ),
                                                 KeepAliveWidgetWrapper(
-                                                  builder: (context) => Text(
-                                                    'Tab View 2',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 32.0,
-                                                        ),
+                                                  builder: (context) =>
+                                                      StreamBuilder<
+                                                          List<WaitlistRecord>>(
+                                                    stream: queryWaitlistRecord(
+                                                      queryBuilder: (waitlistRecord) =>
+                                                          waitlistRecord
+                                                              .where('email',
+                                                                  isEqualTo:
+                                                                      currentUserEmail)
+                                                              .where('type',
+                                                                  isEqualTo:
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                    'groups',
+                                                                    'groups',
+                                                                  )),
+                                                      singleRecord: true,
+                                                    ),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // Customize what your widget looks like when it's loading.
+                                                      if (!snapshot.hasData) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 40.0,
+                                                            height: 40.0,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                      List<WaitlistRecord>
+                                                          columnWaitlistRecordList =
+                                                          snapshot.data!;
+                                                      final columnWaitlistRecord =
+                                                          columnWaitlistRecordList
+                                                                  .isNotEmpty
+                                                              ? columnWaitlistRecordList
+                                                                  .first
+                                                              : null;
+                                                      return Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        6.0),
+                                                            child: Text(
+                                                              'Coming Soon 🎉',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .titleMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Poppins',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                    fontSize:
+                                                                        20.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        20.0,
+                                                                        0.0,
+                                                                        20.0,
+                                                                        12.0),
+                                                            child: Text(
+                                                              'Join the waitlist to be notified when the group matching feature is available.',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Poppins',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          if (!(columnWaitlistRecord !=
+                                                              null))
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          28.0,
+                                                                          0.0,
+                                                                          28.0,
+                                                                          0.0),
+                                                              child:
+                                                                  FFButtonWidget(
+                                                                onPressed:
+                                                                    () async {
+                                                                  logFirebaseEvent(
+                                                                      'MATCH_JOIN_THE_WAITLIST_BTN_ON_TAP');
+                                                                  if ((columnWaitlistRecord !=
+                                                                          null) ==
+                                                                      false) {
+                                                                    logFirebaseEvent(
+                                                                        'Button_backend_call');
+
+                                                                    final waitlistCreateData =
+                                                                        {
+                                                                      ...createWaitlistRecordData(
+                                                                        email:
+                                                                            currentUserEmail,
+                                                                        type:
+                                                                            'groups',
+                                                                      ),
+                                                                      'joined_on':
+                                                                          FieldValue
+                                                                              .serverTimestamp(),
+                                                                    };
+                                                                    await WaitlistRecord
+                                                                        .collection
+                                                                        .doc()
+                                                                        .set(
+                                                                            waitlistCreateData);
+                                                                  } else {
+                                                                    return;
+                                                                  }
+                                                                },
+                                                                text:
+                                                                    'Join the waitlist',
+                                                                options:
+                                                                    FFButtonOptions(
+                                                                  width: double
+                                                                      .infinity,
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          24.0,
+                                                                          0.0,
+                                                                          24.0),
+                                                                  iconPadding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  textStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleSmall
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Poppins',
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                    width: 1.0,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8.0),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          if (columnWaitlistRecord !=
+                                                              null)
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          20.0,
+                                                                          0.0,
+                                                                          20.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                'You have already joined the waitlist!',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleLarge,
+                                                              ),
+                                                            ),
+                                                        ],
+                                                      );
+                                                    },
                                                   ),
                                                 ),
                                                 KeepAliveWidgetWrapper(
-                                                  builder: (context) => Text(
-                                                    'Tab View 3',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 32.0,
-                                                        ),
+                                                  builder: (context) =>
+                                                      StreamBuilder<
+                                                          List<WaitlistRecord>>(
+                                                    stream: queryWaitlistRecord(
+                                                      queryBuilder: (waitlistRecord) =>
+                                                          waitlistRecord
+                                                              .where('email',
+                                                                  isEqualTo:
+                                                                      currentUserEmail)
+                                                              .where('type',
+                                                                  isEqualTo:
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                    'trainers',
+                                                                    'trainers',
+                                                                  )),
+                                                      singleRecord: true,
+                                                    ),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // Customize what your widget looks like when it's loading.
+                                                      if (!snapshot.hasData) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 40.0,
+                                                            height: 40.0,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                      List<WaitlistRecord>
+                                                          columnWaitlistRecordList =
+                                                          snapshot.data!;
+                                                      final columnWaitlistRecord =
+                                                          columnWaitlistRecordList
+                                                                  .isNotEmpty
+                                                              ? columnWaitlistRecordList
+                                                                  .first
+                                                              : null;
+                                                      return Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        6.0),
+                                                            child: Text(
+                                                              'Coming Soon 🎉',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .titleMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Poppins',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                    fontSize:
+                                                                        20.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        20.0,
+                                                                        0.0,
+                                                                        20.0,
+                                                                        12.0),
+                                                            child: Text(
+                                                              'Join the waitlist to be notified when the trainer matching feature is available.',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Poppins',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          if (!(columnWaitlistRecord !=
+                                                              null))
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          28.0,
+                                                                          0.0,
+                                                                          28.0,
+                                                                          0.0),
+                                                              child:
+                                                                  FFButtonWidget(
+                                                                onPressed:
+                                                                    () async {
+                                                                  logFirebaseEvent(
+                                                                      'MATCH_JOIN_THE_WAITLIST_BTN_ON_TAP');
+                                                                  if ((columnWaitlistRecord !=
+                                                                          null) ==
+                                                                      false) {
+                                                                    logFirebaseEvent(
+                                                                        'Button_backend_call');
+
+                                                                    final waitlistCreateData =
+                                                                        {
+                                                                      ...createWaitlistRecordData(
+                                                                        email:
+                                                                            currentUserEmail,
+                                                                        type:
+                                                                            'trainers',
+                                                                      ),
+                                                                      'joined_on':
+                                                                          FieldValue
+                                                                              .serverTimestamp(),
+                                                                    };
+                                                                    await WaitlistRecord
+                                                                        .collection
+                                                                        .doc()
+                                                                        .set(
+                                                                            waitlistCreateData);
+                                                                  } else {
+                                                                    return;
+                                                                  }
+                                                                },
+                                                                text:
+                                                                    'Join the waitlist',
+                                                                options:
+                                                                    FFButtonOptions(
+                                                                  width: double
+                                                                      .infinity,
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          24.0,
+                                                                          0.0,
+                                                                          24.0),
+                                                                  iconPadding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  textStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleSmall
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Poppins',
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                    width: 1.0,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8.0),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          if (columnWaitlistRecord !=
+                                                              null)
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          20.0,
+                                                                          0.0,
+                                                                          20.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                'You have already joined the waitlist!',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleLarge,
+                                                              ),
+                                                            ),
+                                                        ],
+                                                      );
+                                                    },
                                                   ),
                                                 ),
                                               ],
@@ -634,7 +1041,7 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                   if (FFAppState().isUserProfileComplete ==
                                       false)
                                     Container(
-                                      width: 1.0,
+                                      width: double.infinity,
                                       height: double.infinity,
                                       decoration: BoxDecoration(
                                         color: Color(0x00FFFFFF),
@@ -643,9 +1050,10 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                 ],
                               );
                               if (FFAppState().isUserProfileComplete == false) {
-                                return ClipRect(
-                                  child: ImageFiltered(
-                                    imageFilter: ImageFilter.blur(
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(0.0),
+                                  child: BackdropFilter(
+                                    filter: ImageFilter.blur(
                                       sigmaX: 2.0,
                                       sigmaY: 2.0,
                                     ),
