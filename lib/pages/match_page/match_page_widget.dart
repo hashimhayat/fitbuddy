@@ -1050,10 +1050,9 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                 ],
                               );
                               if (FFAppState().isUserProfileComplete == false) {
-                                return ClipRRect(
-                                  borderRadius: BorderRadius.circular(0.0),
-                                  child: BackdropFilter(
-                                    filter: ImageFilter.blur(
+                                return ClipRect(
+                                  child: ImageFiltered(
+                                    imageFilter: ImageFilter.blur(
                                       sigmaX: 2.0,
                                       sigmaY: 2.0,
                                     ),
