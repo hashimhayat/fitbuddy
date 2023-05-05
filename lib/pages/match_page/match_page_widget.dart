@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_swipeable_stack.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/widgets/empty_list_widget/empty_list_widget_widget.dart';
 import '/widgets/profle_completion_status_card/profle_completion_status_card_widget.dart';
 import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -225,6 +226,21 @@ class _MatchPageWidgetState extends State<MatchPageWidget> {
                                                         List<UsersRecord>
                                                             swipeableStackUsersRecordList =
                                                             snapshot.data!;
+                                                        if (swipeableStackUsersRecordList
+                                                            .isEmpty) {
+                                                          return Center(
+                                                            child: Container(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.9,
+                                                              height: 300.0,
+                                                              child:
+                                                                  EmptyListWidgetWidget(),
+                                                            ),
+                                                          );
+                                                        }
                                                         return FlutterFlowSwipeableStack(
                                                           topCardHeightFraction:
                                                               0.72,
