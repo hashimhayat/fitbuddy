@@ -119,7 +119,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Create an account',
+                                      'Sign In',
                                       style: FlutterFlowTheme.of(context)
                                           .headlineLarge
                                           .override(
@@ -133,7 +133,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 12.0, 0.0, 24.0),
                                       child: Text(
-                                        'Let\'s get started by filling out the form below.',
+                                        'Get back in your account by entering your credentials or using Google Sign In.',
                                         style: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
